@@ -1,0 +1,33 @@
+.popup__close {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -40px;
+  right: -40px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.popup__close:hover,
+.popup__close:focus {
+  opacity: 0.6;
+}
+
+.popup__close:active {
+  opacity: 0.3;
+}
+
+@media (max-width: 767px) {
+  .popup__close {
+    top: -45px;
+    right: 0;
+    width: 26px;
+    height: 26px;
+  }
+}

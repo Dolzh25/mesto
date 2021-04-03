@@ -1,0 +1,10 @@
+.popup__wrapper {
+  position: relative;
+  box-sizing: border-box;
+  max-width: 430px;
+  width: 100%;
+  padding: 34px 36px 37px;
+  color: #000000;
+  background-color: #ffffff;
+  border-radius: 10px;
+}

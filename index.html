@@ -21,11 +21,11 @@
         <div class="user__content">
           <h1 class="user__name">Жак-Ив Кусто</h1>
           <p class="user__about">Исследователь океана</p>
-          <button class="user__button-edit" aria-label="Редактировать профиль">
+          <button class="user__button-edit" type="button" aria-label="Редактировать профиль">
             <img src="images/pancil-icon.svg" alt="">
           </button>
         </div>
-        <button class="user__button-add button" aria-label="Добавить пост">
+        <button class="user__button-add button" type="button" aria-label="Добавить пост">
           <img src="images/plus-icon.svg" alt="">
         </button>
       </section>
@@ -36,42 +36,42 @@
             <img class="post__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаевск">
             <div class="post__content">
               <h2 class="post__title">Карачаевск</h2>
-              <button class="post__like" aria-label="Нравится"></button>
+              <button class="post__like" type="button" aria-label="Нравится"></button>
             </div>
           </li>
           <li class="gallery__item post">
             <img class="post__image" src="images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус">
             <div class="post__content">
               <h2 class="post__title">Гора Эльбрус</h2>
-              <button class="post__like" aria-label="Нравится"></button>
+              <button class="post__like" type="button" aria-label="Нравится"></button>
             </div>
           </li>
           <li class="gallery__item post">
             <img class="post__image" src="images/kirill-pershin-1556355-unsplash.jpg" alt="Домбай">
             <div class="post__content">
               <h2 class="post__title">Домбай</h2>
-              <button class="post__like" aria-label="Нравится"></button>
+              <button class="post__like" type="button" aria-label="Нравится"></button>
             </div>
           </li>
           <li class="gallery__item post">
             <img class="post__image" src="images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус">
             <div class="post__content">
               <h2 class="post__title">Гора Эльбрус</h2>
-              <button class="post__like" aria-label="Нравится"></button>
+              <button class="post__like" type="button" aria-label="Нравится"></button>
             </div>
           </li>
           <li class="gallery__item post">
             <img class="post__image" src="images/kirill-pershin-1556355-unsplash.jpg" alt="Домбай">
             <div class="post__content">
               <h2 class="post__title">Домбай</h2>
-              <button class="post__like" aria-label="Нравится"></button>
+              <button class="post__like" type="button" aria-label="Нравится"></button>
             </div>
           </li>
           <li class="gallery__item post">
             <img class="post__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаево-Черкесия">
             <div class="post__content">
               <h2 class="post__title">Карачаево-Черкесия</h2>
-              <button class="post__like" aria-label="Нравится"></button>
+              <button class="post__like" type="button" aria-label="Нравится"></button>
             </div>
           </li>
         </ul>
@@ -84,5 +84,21 @@
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </div>
   </footer>
+
+  <section class="popup">
+    <div class="popup__wrapper">
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <button class="popup__close" aria-label="Закрыть попап">
+        <img class="popup__close-icon" src="images/plus-icon.svg" alt="">
+      </button>
+      <form action="#" method="POST" class="form">
+        <label for="name" class="visually-hidden">Имя</label>
+        <input class="form__input" id="name" type="text" placeholder="Имя">
+        <label for="" id="about" class="visually-hidden">О себе</label>
+        <input class="form__input" id="about" type="text" placeholder="О себе">
+        <button class="form__button-submit" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </section>
 </body>
 </html>
