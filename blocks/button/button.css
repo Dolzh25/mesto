@@ -5,4 +5,14 @@
   background-color: #000000;
   text-align: center;
   cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.button:hover,
+.button:focus {
+  opacity: 0.6;
+}
+
+.button:active {
+  opacity: 0.3;
 }

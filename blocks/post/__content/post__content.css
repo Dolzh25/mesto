@@ -1,0 +1,8 @@
+.post__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 20px;
+  color: #000000;
+  background-color: #ffffff;
+}
