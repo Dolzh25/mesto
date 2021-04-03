@@ -1,0 +1,10 @@
+.user__button-add {
+  margin-left: auto;
+}
+
+@media (max-width: 767px) {
+  .user__button-add {
+    width: 100%;
+    margin-left: 0;
+  }
+}

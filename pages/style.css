@@ -2,6 +2,14 @@
 @import url("../vendors/fonts/fonts.css");
 @import url("../blocks/root/root.css");
 @import url("../blocks/container/container.css");
+@import url("../blocks/button/button.css");
 @import url("../blocks/header/header.css");
 @import url("../blocks/logo/logo.css");
 @import url("../blocks/logo/__image/logo__image.css");
+@import url("../blocks/user/user.css");
+@import url("../blocks/user/__avatar/user__avatar.css");
+@import url("../blocks/user/__content/user__content.css");
+@import url("../blocks/user/__name/user__name.css");
+@import url("../blocks/user/__about/user__about.css");
+@import url("../blocks/user/__button-edit/user__button-edit.css");
+@import url("../blocks/user/__button-add/user__button-add.css");

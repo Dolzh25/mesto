@@ -1,0 +1,15 @@
+.user__content {
+  position: relative;
+  margin-right: 30px;
+  padding-right: 24px;
+}
+
+@media (max-width: 767px) {
+  .user__content {
+    margin-right: 0;
+    margin-bottom: 33px;
+    padding-left: 37px;
+    padding-right: 37px;
+    text-align: center;
+  }
+}

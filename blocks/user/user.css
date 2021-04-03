@@ -1,0 +1,15 @@
+.user {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 50px;
+}
+
+@media (max-width: 767px) {
+  .user {
+    flex-direction: column;
+    padding-top: 42px;
+    padding-bottom: 36px;
+  }
+}

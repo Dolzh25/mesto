@@ -1,0 +1,29 @@
+.user__button-edit {
+  position: absolute;
+  top: 15px;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid #ffffff;
+  background-color: transparent;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.user__button-edit:hover,
+.user__button-edit:focus {
+  opacity: 0.6;
+}
+
+.user__button-edit:active {
+  opacity: 0.3;
+}
+
+@media (max-width: 767px) {
+  .user__button-edit {
+    top: 8px;
+    width: 18px;
+    height: 18px;
+  }
+}
