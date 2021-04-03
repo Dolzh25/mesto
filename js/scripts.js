@@ -1,8 +1,8 @@
 (() => {
   const editProfile = document.querySelector('.user__button-edit');
-  const popup = document.querySelector('.popup');
   const name = document.querySelector('.user__name');
   const about = document.querySelector('.user__about');
+  const popup = document.querySelector('.popup');
   const formName = popup.querySelector('#name');
   const formAbout = popup.querySelector('#about');
   const form = popup.querySelector('.form');
