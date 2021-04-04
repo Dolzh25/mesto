@@ -4,6 +4,8 @@
   border: none;
   border-radius: 2px;
   color: #ffffff;
+  font-size: 18px;
+  line-height: 22px;
   background-color: #000000;
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -16,4 +18,11 @@
 
 .form__button-submit:active {
   background-color: rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 767px) {
+  .form__button-submit {
+    font-size: 14px;
+    line-height: 17px;
+  }
 }
