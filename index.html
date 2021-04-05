@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
   <link rel="stylesheet" href="pages/style.css">
-  <script defer src="js/scripts.js"></script>
 </head>
 <body class="root">
   <header class="header">
@@ -14,17 +13,16 @@
       <img class="logo__image" src="images/logo.svg" alt="Логотип Mesto">
     </a>
   </header>
-  <main>
-    <div class="container">
-      <section class="user">
-        <img class="user__avatar" src="images/kusto.jpg" alt="Жак-Ив Кусто">
-        <div class="user__content">
-          <h1 class="user__name">Жак-Ив Кусто</h1>
-          <p class="user__about">Исследователь океана</p>
-          <button class="user__button-edit" type="button" aria-label="Редактировать профиль"></button>
-        </div>
-        <button class="user__button-add button" type="button" aria-label="Добавить пост"></button>
-      </section>
+  <main class="container">
+    <section class="user">
+      <img class="user__avatar" src="images/kusto.jpg" alt="Жак-Ив Кусто">
+      <div class="user__content">
+        <h1 class="user__name">Жак-Ив Кусто</h1>
+        <p class="user__about">Исследователь океана</p>
+        <button class="user__button-edit" type="button" aria-label="Редактировать профиль"></button>
+      </div>
+      <button class="user__button-add button" type="button" aria-label="Добавить пост"></button>
+    </section>
 
       <section class="gallery">
         <ul class="gallery__list">
@@ -33,21 +31,19 @@
     </div>
   </main>
 
-  <footer class="footer">
-    <div class="container">
-      <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
-    </div>
+  <footer class="footer container">
+    <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
 
   <section class="popup">
     <div class="popup__wrapper">
       <h2 class="popup__title">Редактировать профиль</h2>
-      <button class="popup__close" aria-label="Закрыть попап"></button>
-      <form action="#" method="POST" class="form">
-        <label for="name" class="visually-hidden">Имя</label>
-        <input class="form__input" id="name" type="text" placeholder="Имя" required>
-        <label for="about" class="visually-hidden">О себе</label>
-        <input class="form__input" id="about" type="text" placeholder="О себе">
+      <button class="popup__close" type="button" aria-label="Закрыть попап"></button>
+      <form class="form" action="#" method="POST" name="profile">
+        <label for="name" aria-label="Имя"></label>
+        <input class="form__input" id="name" type="text" name="name" placeholder="Имя" required>
+        <label for="about" aria-label="О себе"></label>
+        <input class="form__input" id="about" type="text" name="about" placeholder="О себе">
         <button class="form__button-submit" type="submit">Сохранить</button>
       </form>
     </div>
@@ -62,5 +58,6 @@
       </div>
     </li>
   </template>
+  <script src="js/scripts.js"></script>
 </body>
 </html>

@@ -1,15 +1,22 @@
 .user__content {
-  position: relative;
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  grid-template-areas:
+    "title button"
+    "subtitle .";
+  column-gap: 18px;
+  row-gap: 16px;
+  max-width: 448px;
   margin-right: 30px;
-  padding-right: 24px;
 }
 
 @media (max-width: 767px) {
   .user__content {
+    column-gap: 10px;
+    row-gap: 14px;
     margin-right: 0;
+    margin-left: 18px;
     margin-bottom: 33px;
-    padding-left: 37px;
-    padding-right: 37px;
     text-align: center;
   }
 }
