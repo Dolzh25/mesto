@@ -35,7 +35,7 @@
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
 
-  <section class="popup">
+  <section class="popup" id="profile">
     <div class="popup__wrapper">
       <h2 class="popup__title">Редактировать профиль</h2>
       <button class="popup__close" type="button" aria-label="Закрыть попап"></button>
@@ -45,6 +45,20 @@
         <label for="about" aria-label="О себе"></label>
         <input class="form__input" id="about" type="text" name="about" placeholder="О себе">
         <button class="form__button-submit" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="popup" id="add-post">
+    <div class="popup__wrapper">
+      <h2 class="popup__title">Новое место</h2>
+      <button class="popup__close" type="button" aria-label="Закрыть попап"></button>
+      <form class="form" action="#" method="POST" name="post">
+        <label for="post-name" aria-label="Название"></label>
+        <input class="form__input" id="post-name" type="text" name="post-name" placeholder="Название" required>
+        <label for="post-image" aria-label="Ссылка на картинку"></label>
+        <input class="form__input" id="post-image" type="text" name="post-image" placeholder="Ссылка на картинку" required>
+        <button class="form__button-submit" type="submit">Создать</button>
       </form>
     </div>
   </section>
