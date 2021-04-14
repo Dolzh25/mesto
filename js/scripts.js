@@ -50,13 +50,21 @@
   const renderCards = () => {
     initialCards.forEach((card) => {
       const newCard = createCard(card.name, card.link);
+      const likeButton = newCard.querySelector('.post__like');
+      likeButton.addEventListener('click', putLikeCard);
       galleryList.append(newCard);
     });
   };
 
   const renderNewCard = (post) => {
+    const likeButton = post.querySelector('.post__like');
+    likeButton.addEventListener('click', putLikeCard);
     galleryList.prepend(post);
   }
+
+  const putLikeCard = function () {
+    this.classList.toggle('post__like_active');
+  };
 
   renderCards();
 
