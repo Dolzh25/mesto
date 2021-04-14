@@ -8,6 +8,7 @@
   const galleryList = document.querySelector('.gallery__list');
   const cardTemplate = document.querySelector('#post').content;
   const addPostButton = document.querySelector('.user__button-add');
+  const fullscreenPopup = document.querySelector('#fullscreen-post');
 
   const initialCards = [
     {
@@ -52,18 +53,52 @@
       const newCard = createCard(card.name, card.link);
       const likeButton = newCard.querySelector('.post__like');
       const removeButton = newCard.querySelector('.post__delete');
+      const post = newCard.querySelector('.post');
+
       likeButton.addEventListener('click', putLikeCard);
       removeButton.addEventListener('click', removeCard);
+      post.addEventListener('click', showFullImage);
       galleryList.append(newCard);
     });
   };
 
   const renderNewCard = (post) => {
     const likeButton = post.querySelector('.post__like');
-    likeButton.addEventListener('click', putLikeCard);
     const removeButton = post.querySelector('.post__delete');
+    const postElement = post.querySelector('.post');
+
+    likeButton.addEventListener('click', putLikeCard);
     removeButton.addEventListener('click', removeCard);
+    postElement.addEventListener('click', showFullImage);
     galleryList.prepend(post);
+  }
+
+  const fillFullscreenPopup = (popup) => {
+    const caption = popup.querySelector('.post__title').textContent;
+    const image = popup.querySelector('.post__image');
+    const closeButton = fullscreenPopup.querySelector('.popup__close');
+
+    popupCaption = fullscreenPopup.querySelector('.popup__caption');
+    popupCaption.textContent = caption;
+
+    popupImage = fullscreenPopup.querySelector('.popup__image');
+    popupImage.src = image.src;
+
+    closeButton.addEventListener('click', () => {
+      closePopup(fullscreenPopup);
+      popupImage.src = '';
+      popupCaption.textContent = '';
+    });
+  }
+
+  const showFullImage = function (evt) {
+    const image = this.querySelector('.post__image');
+    const closePopup = this.querySelector('.popup__close');
+
+    if (evt.target === image) {
+      openPopup(fullscreenPopup);
+      fillFullscreenPopup(this);
+    }
   }
 
   const putLikeCard = function () {
@@ -132,7 +167,6 @@
     const imageLink = this.querySelector('#post-image').value;
 
     const post = createCard(name, imageLink);
-    console.log(post);
     renderNewCard(post);
 
     closePopup(popup);
