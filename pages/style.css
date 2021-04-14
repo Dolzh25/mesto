@@ -15,6 +15,7 @@
 @import url("../blocks/user/__button-add/user__button-add.css");
 @import url("../blocks/gallery/__list/gallery__list.css");
 @import url("../blocks/post/post.css");
+@import url("../blocks/post/__delete/post__delete.css");
 @import url("../blocks/post/__image/post__image.css");
 @import url("../blocks/post/__content/post__content.css");
 @import url("../blocks/post/__title/post__title.css");
