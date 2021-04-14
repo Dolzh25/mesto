@@ -51,7 +51,9 @@
     initialCards.forEach((card) => {
       const newCard = createCard(card.name, card.link);
       const likeButton = newCard.querySelector('.post__like');
+      const removeButton = newCard.querySelector('.post__delete');
       likeButton.addEventListener('click', putLikeCard);
+      removeButton.addEventListener('click', removeCard);
       galleryList.append(newCard);
     });
   };
@@ -59,12 +61,19 @@
   const renderNewCard = (post) => {
     const likeButton = post.querySelector('.post__like');
     likeButton.addEventListener('click', putLikeCard);
+    const removeButton = post.querySelector('.post__delete');
+    removeButton.addEventListener('click', removeCard);
     galleryList.prepend(post);
   }
 
   const putLikeCard = function () {
     this.classList.toggle('post__like_active');
   };
+
+  const removeCard = function () {
+    const post = this.closest('.post');
+    post.remove();
+  }
 
   renderCards();
 
