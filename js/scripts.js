@@ -114,6 +114,7 @@
 
   const openPopup = (popup) => {
     popup.classList.add('popup_opened');
+    popup.addEventListener('click', onPopupCloseButtonClick);
   };
 
   const closePopup = (popup) => {
@@ -152,7 +153,6 @@
     fillProfileForm();
 
     popupProfileForm.addEventListener('submit', onProfileFormSubmit);
-    popupProfile.addEventListener('click', onPopupCloseButtonClick);
   };
 
   const onAddPostFormSubmit = function (evt) {
@@ -174,7 +174,6 @@
   const onButtonAddClick = () => {
     openPopup(popupAddPost);
 
-    popupAddPost.addEventListener('click', onPopupCloseButtonClick);
     popupAddPostForm.addEventListener('submit', onAddPostFormSubmit);
   };
 
