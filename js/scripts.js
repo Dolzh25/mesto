@@ -2,13 +2,25 @@
   const editProfile = document.querySelector('.user__button-edit');
   const name = document.querySelector('.user__name');
   const about = document.querySelector('.user__about');
-  const popup = document.querySelector('.popup');
-  const formName = popup.querySelector('#name');
-  const formAbout = popup.querySelector('#about');
+  const addPostButton = document.querySelector('.user__button-add');
+
+  const popupProfile = document.querySelector('#profile');
+  const popupProfileForm = popupProfile.querySelector('#profile form');
+  const formName = popupProfile.querySelector('#name');
+  const formAbout = popupProfile.querySelector('#about');
+
+  const popupAddPost = document.querySelector('#add-post');
+  const popupAddPostForm = popupAddPost.querySelector('#add-post form');
+  const popupAddPostName = popupAddPost.querySelector('#post-name');
+  const popupAddPostLink = popupAddPost.querySelector('#post-image');
+
   const galleryList = document.querySelector('.gallery__list');
   const cardTemplate = document.querySelector('#post').content;
-  const addPostButton = document.querySelector('.user__button-add');
-  const fullscreenPopup = document.querySelector('#fullscreen-post');
+
+  const popupFullscreen = document.querySelector('#fullscreen-post');
+  const fullscreenCloseButton = popupFullscreen.querySelector('.popup__close');
+  const fullscreenImage = popupFullscreen.querySelector('.popup__image');
+  const fullscreenCaption = popupFullscreen.querySelector('.popup__caption');
 
   const initialCards = [
     {
@@ -37,66 +49,54 @@
     }
   ];
 
-  const createCard = (name, link) => {
+  const createCard = (data) => {
     const cardElement = cardTemplate.cloneNode(true);
+    const post = cardElement.querySelector('.post');
     const cardImg = cardElement.querySelector('.post__image');
     const cardTitle = cardElement.querySelector('.post__title');
+    const likeButton = cardElement.querySelector('.post__like');
+    const removeButton = cardElement.querySelector('.post__delete');
 
-    cardImg.src = link;
-    cardImg.alt = name;
-    cardTitle.textContent = name;
-    return cardElement;
-  };
-
-  const renderCards = () => {
-    initialCards.forEach((card) => {
-      const newCard = createCard(card.name, card.link);
-      const likeButton = newCard.querySelector('.post__like');
-      const removeButton = newCard.querySelector('.post__delete');
-      const post = newCard.querySelector('.post');
-
-      likeButton.addEventListener('click', putLikeCard);
-      removeButton.addEventListener('click', removeCard);
-      post.addEventListener('click', showFullImage);
-      galleryList.append(newCard);
-    });
-  };
-
-  const renderNewCard = (post) => {
-    const likeButton = post.querySelector('.post__like');
-    const removeButton = post.querySelector('.post__delete');
-    const postElement = post.querySelector('.post');
+    cardImg.src = data.link;
+    cardImg.alt = data.name;
+    cardTitle.textContent = data.name;
 
     likeButton.addEventListener('click', putLikeCard);
     removeButton.addEventListener('click', removeCard);
-    postElement.addEventListener('click', showFullImage);
+    post.addEventListener('click', showFullImage);
+
+    return cardElement;
+  };
+
+  const renderCard = (post) => {
     galleryList.prepend(post);
-  }
+  };
+
+  const renderCards = () => {
+    initialCards.reverse().forEach((card) => {
+      renderCard(createCard(card));
+    });
+  };
 
   const fillFullscreenPopup = (popup) => {
     const caption = popup.querySelector('.post__title').textContent;
     const image = popup.querySelector('.post__image');
-    const closeButton = fullscreenPopup.querySelector('.popup__close');
 
-    popupCaption = fullscreenPopup.querySelector('.popup__caption');
-    popupCaption.textContent = caption;
+    fullscreenCaption.textContent = caption;
+    fullscreenImage.src = image.src;
 
-    popupImage = fullscreenPopup.querySelector('.popup__image');
-    popupImage.src = image.src;
-
-    closeButton.addEventListener('click', () => {
-      closePopup(fullscreenPopup);
-      popupImage.src = '';
-      popupCaption.textContent = '';
+    fullscreenCloseButton.addEventListener('click', () => {
+      closePopup(popupFullscreen);
+      fullscreenImage.src = '';
+      fullscreenCaption.textContent = '';
     });
   }
 
   const showFullImage = function (evt) {
     const image = this.querySelector('.post__image');
-    const closePopup = this.querySelector('.popup__close');
 
     if (evt.target === image) {
-      openPopup(fullscreenPopup);
+      openPopup(popupFullscreen);
       fillFullscreenPopup(this);
     }
   }
@@ -142,45 +142,40 @@
 
   const onProfileFormSubmit = function (evt) {
     evt.preventDefault();
-    const popup = this.closest('.popup');
     setNewValues();
-    closePopup(popup);
+    closePopup(popupProfile);
     this.removeEventListener('submit', onProfileFormSubmit);
   };
 
   const onEditProfileClick = () => {
-    const popup = document.querySelector('#profile');
-    const form = popup.querySelector('.form');
-
-    openPopup(popup);
+    openPopup(popupProfile);
     fillProfileForm();
 
-    form.addEventListener('submit', onProfileFormSubmit);
-    popup.addEventListener('click', onPopupCloseButtonClick);
+    popupProfileForm.addEventListener('submit', onProfileFormSubmit);
+    popupProfile.addEventListener('click', onPopupCloseButtonClick);
   };
 
   const onAddPostFormSubmit = function (evt) {
     evt.preventDefault();
-    const popup = this.closest('.popup');
+    const data = {
+      name: popupAddPostName.value,
+      link: popupAddPostLink.value
+    }
 
-    const name = this.querySelector('#post-name').value;
-    const imageLink = this.querySelector('#post-image').value;
+    renderCard(createCard(data));
 
-    const post = createCard(name, imageLink);
-    renderNewCard(post);
+    closePopup(popupAddPost);
+    popupAddPostName.value = '';
+    popupAddPostLink.value = '';
 
-    closePopup(popup);
-    this.removeEventListener('submit', onProfileFormSubmit);
+    this.removeEventListener('submit', onAddPostFormSubmit);
   };
 
   const onButtonAddClick = () => {
-    const popup = document.querySelector('#add-post');
-    const form = popup.querySelector('.form');
-    openPopup(popup);
+    openPopup(popupAddPost);
 
-
-    form.addEventListener('submit', onAddPostFormSubmit);
-    popup.addEventListener('click', onPopupCloseButtonClick);
+    popupAddPost.addEventListener('click', onPopupCloseButtonClick);
+    popupAddPostForm.addEventListener('submit', onAddPostFormSubmit);
   };
 
   editProfile.addEventListener('click', onEditProfileClick);
