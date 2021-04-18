@@ -39,10 +39,14 @@
       <h2 class="popup__title">Редактировать профиль</h2>
       <button class="popup__close" type="button" aria-label="Закрыть попап"></button>
       <form class="form" action="#" method="POST" name="profile">
-        <label for="name" aria-label="Имя"></label>
-        <input class="form__input" id="name" type="text" name="name" minlength="2" maxlength="40" placeholder="Имя" required>
-        <label for="about" aria-label="О себе"></label>
-        <input class="form__input" id="about" type="text" name="about" minlength="2" maxlength="200" placeholder="О себе">
+        <label class="form__field" aria-label="Имя">
+          <input class="form__input" id="name-input" type="text" name="name" minlength="2" maxlength="40" placeholder="Имя" required>
+          <span class="form__input-error name-input-error"></span>
+        </label>
+        <label class="form__field" aria-label="О себе">
+          <input class="form__input" id="about-input" type="text" name="about" minlength="2" maxlength="200" placeholder="О себе">
+          <span class="form__input-error about-input-error"></span>
+        </label>
         <button class="form__button-submit" type="submit">Сохранить</button>
       </form>
     </div>
@@ -53,10 +57,14 @@
       <h2 class="popup__title">Новое место</h2>
       <button class="popup__close" type="button" aria-label="Закрыть попап"></button>
       <form class="form" action="#" method="POST" name="post">
-        <label for="post-name" aria-label="Название"></label>
-        <input class="form__input" id="post-name" type="text" name="post-name" minlength="2" maxlength="30" placeholder="Название" required>
-        <label for="post-image" aria-label="Ссылка на картинку"></label>
-        <input class="form__input" id="post-image" type="url" name="post-image" placeholder="Ссылка на картинку" required>
+        <label class="form__field" aria-label="Название">
+          <input class="form__input" id="post-name" type="text" name="post-name" minlength="2" maxlength="30" placeholder="Название" required>
+          <span class="form__input-error post-name-error"></span>
+        </label>
+        <label class="form__field" aria-label="Ссылка на картинку">
+          <input class="form__input" id="post-image" type="url" name="post-image" placeholder="Ссылка на картинку" required>
+          <span class="form__input-error post-image-error"></span>
+        </label>
         <button class="form__button-submit" type="submit">Создать</button>
       </form>
     </div>
