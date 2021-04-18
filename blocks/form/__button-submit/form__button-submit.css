@@ -1,7 +1,7 @@
 .form__button-submit {
   width: 100%;
   padding: 14px 20px;
-  border: none;
+  border: 1px solid #000000;
   border-radius: 2px;
   color: #ffffff;
   font-size: 18px;
@@ -14,10 +14,18 @@
 .form__button-submit:hover,
 .form__button-submit:focus {
   background-color: rgba(0, 0, 0, 0.8);
+  border-color: rgba(0, 0, 0, 0.8);
 }
 
 .form__button-submit:active {
   background-color: rgba(0, 0, 0, 0.6);
+  border-color: rgba(0, 0, 0, 0.6);
+}
+
+.form__button-submit:disabled {
+  background-color: #ffffff;
+  color: rgba(0, 0, 0, 0.2);
+  border-color: rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 767px) {
