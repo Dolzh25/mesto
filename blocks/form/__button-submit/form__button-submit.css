@@ -22,12 +22,6 @@
   border-color: rgba(0, 0, 0, 0.6);
 }
 
-.form__button-submit:disabled {
-  background-color: #ffffff;
-  color: rgba(0, 0, 0, 0.2);
-  border-color: rgba(0, 0, 0, 0.2);
-}
-
 @media (max-width: 767px) {
   .form__button-submit {
     font-size: 14px;
