@@ -6,8 +6,8 @@
 
   const popupProfile = document.querySelector('#profile');
   const popupProfileForm = popupProfile.querySelector('#profile form');
-  const formName = popupProfile.querySelector('#name');
-  const formAbout = popupProfile.querySelector('#about');
+  const formName = popupProfile.querySelector('#name-input');
+  const formAbout = popupProfile.querySelector('#about-input');
 
   const popupAddPost = document.querySelector('#add-post');
   const popupAddPostForm = popupAddPost.querySelector('#add-post form');
@@ -48,6 +48,15 @@
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
   ];
+
+  const getPopupInputValue = input => input.textContent;
+
+  const fillProfileForm = () => {
+    formName.value = getPopupInputValue(name);
+    formAbout.value = getPopupInputValue(about);
+  };
+
+  fillProfileForm();
 
   const createCard = (data) => {
     const cardElement = cardTemplate.cloneNode(true);
@@ -112,19 +121,25 @@
 
   renderCards();
 
+  const onEscPress =  (evt) => {
+    const popup = document.querySelector('.popup_opened');
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      closePopup(popup);
+    }
+  }
+
   const openPopup = (popup) => {
     popup.classList.add('popup_opened');
+
     popup.addEventListener('click', onPopupCloseButtonClick);
+    window.addEventListener('keydown', onEscPress);
   };
 
   const closePopup = (popup) => {
     popup.classList.remove('popup_opened');
     popup.removeEventListener('click', onPopupCloseButtonClick);
-  };
-
-  const fillProfileForm = () => {
-    formName.value = getPopupInputValue(name);
-    formAbout.value = getPopupInputValue(about);
+    window.removeEventListener('keydown', onEscPress);
   };
 
   const setNewValues = () => {
@@ -132,11 +147,13 @@
     about.textContent = formAbout.value;
   };
 
-  const getPopupInputValue = input => input.textContent;
 
   const onPopupCloseButtonClick = function (evt) {
     const closeButton = this.querySelector('.popup__close');
     if (evt.target === closeButton) {
+      closePopup(this);
+    }
+    if (evt.target === this) {
       closePopup(this);
     }
   };
