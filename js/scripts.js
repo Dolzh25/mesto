@@ -1,5 +1,5 @@
 (() => {
-  const editProfile = document.querySelector('.user__button-edit');
+  const openEditProfileBtn = document.querySelector('.user__button-edit');
   const name = document.querySelector('.user__name');
   const about = document.querySelector('.user__about');
   const addPostButton = document.querySelector('.user__button-add');
@@ -29,8 +29,6 @@
     formAbout.value = getPopupInputValue(about);
   };
 
-  fillProfileForm();
-
   const createCard = (data) => {
     const cardElement = cardTemplate.cloneNode(true);
     const post = cardElement.querySelector('.post');
@@ -54,7 +52,7 @@
     galleryList.prepend(post);
   };
 
-  const renderCards = () => {
+  const renderInitialCards = () => {
     initialCards.reverse().forEach((card) => {
       renderCard(createCard(card));
     });
@@ -66,12 +64,7 @@
 
     fullscreenCaption.textContent = caption;
     fullscreenImage.src = image.src;
-
-    fullscreenCloseButton.addEventListener('click', () => {
-      closePopup(popupFullscreen);
-      fullscreenImage.src = '';
-      fullscreenCaption.textContent = '';
-    });
+    fullscreenImage.alt = image.alt;
   }
 
   const showFullImage = function (evt) {
@@ -92,7 +85,7 @@
     post.remove();
   }
 
-  renderCards();
+  renderInitialCards();
 
   const onEscPress =  (evt) => {
     const popup = document.querySelector('.popup_opened');
@@ -103,6 +96,8 @@
   }
 
   const openPopup = (popup) => {
+    const popupForm = popup.querySelector('.form');
+    enableValidation(popupForm);
     popup.classList.add('popup_opened');
 
     popup.addEventListener('click', onPopupCloseButtonClick);
@@ -115,11 +110,10 @@
     window.removeEventListener('keydown', onEscPress);
   };
 
-  const setNewValues = () => {
+  const setUserProfileValues = () => {
     name.textContent = formName.value;
     about.textContent = formAbout.value;
   };
-
 
   const onPopupCloseButtonClick = function (evt) {
     const closeButton = this.querySelector('.popup__close');
@@ -133,16 +127,20 @@
 
   const onProfileFormSubmit = function (evt) {
     evt.preventDefault();
-    setNewValues();
+    setUserProfileValues();
     closePopup(popupProfile);
     this.removeEventListener('submit', onProfileFormSubmit);
   };
 
   const onEditProfileClick = () => {
-    openPopup(popupProfile);
     fillProfileForm();
+    openPopup(popupProfile);
 
     popupProfileForm.addEventListener('submit', onProfileFormSubmit);
+  };
+
+  const onAddPostFormReset = () => {
+    popupAddPostForm.reset();
   };
 
   const onAddPostFormSubmit = function (evt) {
@@ -155,18 +153,23 @@
     renderCard(createCard(data));
 
     closePopup(popupAddPost);
-    popupAddPostName.value = '';
-    popupAddPostLink.value = '';
 
     this.removeEventListener('submit', onAddPostFormSubmit);
   };
 
+  fullscreenCloseButton.addEventListener('click', () => {
+    closePopup(popupFullscreen);
+    fullscreenImage.src = '';
+    fullscreenCaption.textContent = '';
+  });
+
   const onButtonAddClick = () => {
+    onAddPostFormReset();
     openPopup(popupAddPost);
 
     popupAddPostForm.addEventListener('submit', onAddPostFormSubmit);
   };
 
-  editProfile.addEventListener('click', onEditProfileClick);
+  openEditProfileBtn.addEventListener('click', onEditProfileClick);
   addPostButton.addEventListener('click', onButtonAddClick);
 })();
