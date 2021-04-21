@@ -96,8 +96,6 @@
   }
 
   const openPopup = (popup) => {
-    const popupForm = popup.querySelector('.form');
-    enableValidation(popupForm);
     popup.classList.add('popup_opened');
 
     popup.addEventListener('click', onPopupCloseButtonClick);
@@ -135,6 +133,7 @@
   const onEditProfileClick = () => {
     fillProfileForm();
     openPopup(popupProfile);
+    checkInputOpenPopup(popupProfileForm);
 
     popupProfileForm.addEventListener('submit', onProfileFormSubmit);
   };
