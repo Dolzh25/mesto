@@ -31,11 +31,18 @@ const formSelectors = {
   errorClass: 'form__input-error_active'
 }
 
+const openFullscreenPopup = (link, name) => {
+  fullscreenImage.src = link;
+  fullscreenImage.alt = name;
+  fullscreenCaption.textContent = name;
+  openPopup(popupFullscreen);
+}
+
 const getPopupInputValue = input => input.textContent;
 
 const onEscPress =  (evt) => {
-  const popup = document.querySelector('.popup_opened');
   if (evt.key === 'Escape') {
+    const popup = document.querySelector('.popup_opened');
     evt.preventDefault();
     closePopup(popup);
   }
@@ -78,21 +85,19 @@ const onProfileFormSubmit = function (evt) {
   evt.preventDefault();
   setUserProfileValues();
   closePopup(popupProfile);
-  this.removeEventListener('submit', onProfileFormSubmit);
 };
 
 const onEditProfileClick = () => {
   fillProfileForm();
   openPopup(popupProfile);
-  const formProfile = document.querySelector('.form[name="profile"]');
-  const form = new FormValidator(formSelectors, formProfile);
-  form.checkInputOpenPopup(formProfile);
+  profileFormValidator.checkInputOpenPopup();
 
   popupProfileForm.addEventListener('submit', onProfileFormSubmit);
 };
 
 const onAddPostFormReset = () => {
   popupAddPostForm.reset();
+  addCardFormValidator.toggleButtonState();
 };
 
 const onAddPostFormSubmit = function (evt) {
@@ -106,8 +111,6 @@ const onAddPostFormSubmit = function (evt) {
   galleryLists.prepend(card.generateCard());
 
   closePopup(popupAddPost);
-
-  this.removeEventListener('submit', onAddPostFormSubmit);
 };
 
 fullscreenCloseButton.addEventListener('click', () => {
@@ -130,11 +133,13 @@ const galleryLists = document.querySelector('.gallery__list');
 const formList = document.querySelectorAll('.form');
 
 initialCards.reverse().forEach((data) => {
-  const card = new Card(data, '#post');
+  const card = new Card(data, '#post', openFullscreenPopup);
   galleryLists.prepend(card.generateCard());
 });
 
-formList.forEach((formElement) => {
-  const form = new FormValidator(formSelectors, formElement);
-  form.enableValidation();
-})
+
+const profileFormValidator = new FormValidator(formSelectors, popupProfileForm);
+profileFormValidator.enableValidation();
+
+const addCardFormValidator = new FormValidator(formSelectors, popupAddPostForm);
+addCardFormValidator.enableValidation();

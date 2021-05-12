@@ -1,8 +1,8 @@
 export default class Card {
-  constructor(data, selectorTemplate) {
+  constructor(data, selectorTemplate, handleOpenPopup) {
     this._data = data;
     this._selectorTemplate = selectorTemplate;
-    this._onEscPress = this._onEscPress.bind(this);
+    this._handleOpenPopup = handleOpenPopup;
   }
 
   _getTemplate() {
@@ -16,64 +16,36 @@ export default class Card {
   }
 
   _putLikeCard() {
-    this._element.querySelector('.post__like').classList.toggle('post__like_active');
+    this._likeButton.classList.toggle('post__like_active');
   }
 
   _removeCard() {
     this._element.remove();
   }
 
-  _showfullImage() {
-    this._openPopup();
-  }
-
-  _fillFullscreenPopup() {
-    document.querySelector('#fullscreen-post').querySelector('.popup__image').src = this._data.link;
-    document.querySelector('#fullscreen-post').querySelector('.popup__image').alt = this._data.name;
-    document.querySelector('#fullscreen-post').querySelector('.popup__caption').textContent = this._data.name;
-  }
-
-  _openPopup() {
-    document.querySelector('#fullscreen-post').classList.add('popup_opened');
-    this._fillFullscreenPopup();
-
-    document.querySelector('#fullscreen-post').querySelector('.popup__close').addEventListener('click', this._closePopup);
-    window.addEventListener('keydown', this._onEscPress);
-  }
-
-  _closePopup() {
-    document.querySelector('#fullscreen-post').classList.remove('popup_opened');
-
-    document.querySelector('#fullscreen-post').querySelector('.popup__close').removeEventListener('click', this._closePopup);
-    window.removeEventListener('keydown', this._onEscPress);
-  }
-
-  _onEscPress(evt) {
-    if (evt.key === 'Escape') {
-      evt.preventDefault();
-      this._closePopup();
-    }
-  }
-
   _setEventListeners() {
-    this._element.querySelector('.post__like').addEventListener('click', () => {
+    this._likeButton.addEventListener('click', () => {
       this._putLikeCard();
     });
-    this._element.querySelector('.post__delete').addEventListener('click', () => {
+    this._deleteButton.addEventListener('click', () => {
       this._removeCard();
     });
-    this._element.querySelector('.post__image').addEventListener('click', () => {
-      this._showfullImage();
+    this._imageElement.addEventListener('click', () => {
+      this._handleOpenPopup(this._data.link, this._data.name);
     });
   }
 
   generateCard() {
     this._element = this._getTemplate();
+    this._imageElement = this._element.querySelector('.post__image');
+    this._titleElement = this._element.querySelector('.post__title');
+    this._likeButton = this._element.querySelector('.post__like');
+    this._deleteButton = this._element.querySelector('.post__delete');
     this._setEventListeners();
 
-    this._element.querySelector('.post__image').src = this._data.link;
-    this._element.querySelector('.post__image').alt = this._data.name;
-    this._element.querySelector('.post__title').textContent = this._data.name;
+    this._imageElement.src = this._data.link;
+    this._imageElement.alt = this._data.name;
+    this._titleElement.textContent = this._data.name;
 
     return this._element;
   }
