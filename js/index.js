@@ -91,8 +91,6 @@ const onEditProfileClick = () => {
   fillProfileForm();
   openPopup(popupProfile);
   profileFormValidator.checkInputOpenPopup();
-
-  popupProfileForm.addEventListener('submit', onProfileFormSubmit);
 };
 
 const onAddPostFormReset = () => {
@@ -107,7 +105,7 @@ const onAddPostFormSubmit = function (evt) {
     link: popupAddPostLink.value
   }
 
-  const card = new Card(data, '#post');
+  const card = new Card(data, '#post', openFullscreenPopup);
   galleryLists.prepend(card.generateCard());
 
   closePopup(popupAddPost);
@@ -122,8 +120,6 @@ fullscreenCloseButton.addEventListener('click', () => {
 const onButtonAddClick = () => {
   onAddPostFormReset();
   openPopup(popupAddPost);
-
-  popupAddPostForm.addEventListener('submit', onAddPostFormSubmit);
 };
 
 openEditProfileBtn.addEventListener('click', onEditProfileClick);
