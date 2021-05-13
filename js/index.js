@@ -1,6 +1,7 @@
 import initialCards from './initial-cards.js';
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
+import Section from './Section.js';
 
 const openEditProfileBtn = document.querySelector('.user__button-edit');
 const name = document.querySelector('.user__name');
@@ -106,7 +107,7 @@ const onAddPostFormSubmit = function (evt) {
   }
 
   const card = new Card(data, '#post', openFullscreenPopup);
-  galleryLists.prepend(card.generateCard());
+  cardList.addItem(card.generateCard());
 
   closePopup(popupAddPost);
 };
@@ -125,13 +126,15 @@ const onButtonAddClick = () => {
 openEditProfileBtn.addEventListener('click', onEditProfileClick);
 addPostButton.addEventListener('click', onButtonAddClick);
 
-const galleryLists = document.querySelector('.gallery__list');
-const formList = document.querySelectorAll('.form');
+const cardList = new Section({
+  items: initialCards.reverse(),
+  renderer: (data) => {
+    const card = new Card(data, '#post', openFullscreenPopup);
+    cardList.addItem(card.generateCard());
+  }
+}, '.gallery__list');
 
-initialCards.reverse().forEach((data) => {
-  const card = new Card(data, '#post', openFullscreenPopup);
-  galleryLists.prepend(card.generateCard());
-});
+cardList.renderItems();
 
 popupProfileForm.addEventListener('submit', onProfileFormSubmit);
 popupAddPostForm.addEventListener('submit', onAddPostFormSubmit);
