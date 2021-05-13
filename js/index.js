@@ -133,6 +133,8 @@ initialCards.reverse().forEach((data) => {
   galleryLists.prepend(card.generateCard());
 });
 
+popupProfileForm.addEventListener('submit', onProfileFormSubmit);
+popupAddPostForm.addEventListener('submit', onAddPostFormSubmit);
 
 const profileFormValidator = new FormValidator(formSelectors, popupProfileForm);
 profileFormValidator.enableValidation();
