@@ -2,26 +2,14 @@ import initialCards from './initial-cards.js';
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import Section from './Section.js';
+import PopupWithImage from './PopupWithImage.js';
+import PopupWithForm from './PopupWithForm.js';
+import UserInfo from './UserInfo.js';
 
 const openEditProfileBtn = document.querySelector('.user__button-edit');
-const name = document.querySelector('.user__name');
-const about = document.querySelector('.user__about');
 const addPostButton = document.querySelector('.user__button-add');
-
-const popupProfile = document.querySelector('#profile');
-const popupProfileForm = popupProfile.querySelector('#profile form');
-const formName = popupProfile.querySelector('#name-input');
-const formAbout = popupProfile.querySelector('#about-input');
-
-const popupAddPost = document.querySelector('#add-post');
-const popupAddPostForm = popupAddPost.querySelector('#add-post form');
-const popupAddPostName = popupAddPost.querySelector('#post-name');
-const popupAddPostLink = popupAddPost.querySelector('#post-image');
-
-const popupFullscreen = document.querySelector('#fullscreen-post');
-const fullscreenCloseButton = popupFullscreen.querySelector('.popup__close');
-const fullscreenImage = popupFullscreen.querySelector('.popup__image');
-const fullscreenCaption = popupFullscreen.querySelector('.popup__caption');
+const popupProfileForm = document.querySelector('#profile form');
+const popupAddPostForm = document.querySelector('#add-post form');
 
 const formSelectors = {
   formSelector: '.form',
@@ -32,112 +20,61 @@ const formSelectors = {
   errorClass: 'form__input-error_active'
 }
 
-const openFullscreenPopup = (link, name) => {
-  fullscreenImage.src = link;
-  fullscreenImage.alt = name;
-  fullscreenCaption.textContent = name;
-  openPopup(popupFullscreen);
-}
+const cardList = new Section({
+  items: initialCards.reverse(),
+  renderer: (data) => {
 
-const getPopupInputValue = input => input.textContent;
+    const card = new Card(data, '#post', popupWithImage.open);
 
-const onEscPress =  (evt) => {
-  if (evt.key === 'Escape') {
-    const popup = document.querySelector('.popup_opened');
-    evt.preventDefault();
-    closePopup(popup);
+    cardList.addItem(card.generateCard());
   }
-}
+}, '.gallery__list');
 
-const openPopup = (popup) => {
-  popup.classList.add('popup_opened');
+const popupWithImage = new PopupWithImage('#fullscreen-post');
 
-  popup.addEventListener('click', onPopupCloseButtonClick);
-  window.addEventListener('keydown', onEscPress);
-};
-
-const closePopup = (popup) => {
-  popup.classList.remove('popup_opened');
-  popup.removeEventListener('click', onPopupCloseButtonClick);
-  window.removeEventListener('keydown', onEscPress);
-};
-
-const onPopupCloseButtonClick = function (evt) {
-  const closeButton = this.querySelector('.popup__close');
-  if (evt.target === closeButton) {
-    closePopup(this);
-  }
-  if (evt.target === this) {
-    closePopup(this);
-  }
-};
-
-const fillProfileForm = () => {
-  formName.value = getPopupInputValue(name);
-  formAbout.value = getPopupInputValue(about);
-};
-
-const setUserProfileValues = () => {
-  name.textContent = formName.value;
-  about.textContent = formAbout.value;
-};
-
-const onProfileFormSubmit = function (evt) {
-  evt.preventDefault();
-  setUserProfileValues();
-  closePopup(popupProfile);
-};
-
-const onEditProfileClick = () => {
-  fillProfileForm();
-  openPopup(popupProfile);
-  profileFormValidator.checkInputOpenPopup();
-};
-
-const onAddPostFormReset = () => {
-  popupAddPostForm.reset();
-  addCardFormValidator.toggleButtonState();
-};
-
-const onAddPostFormSubmit = function (evt) {
-  evt.preventDefault();
+const onAddPostFormSubmit = (values) => {
   const data = {
-    name: popupAddPostName.value,
-    link: popupAddPostLink.value
+    name: values['post-name'],
+    link: values['post-image']
   }
 
-  const card = new Card(data, '#post', openFullscreenPopup);
+  const card = new Card(data, '#post', popupWithImage.open);
   cardList.addItem(card.generateCard());
 
-  closePopup(popupAddPost);
+  popupAddPost.close();
 };
 
-fullscreenCloseButton.addEventListener('click', () => {
-  closePopup(popupFullscreen);
-  fullscreenImage.src = '';
-  fullscreenCaption.textContent = '';
-});
+const popupAddPost = new PopupWithForm('#add-post', onAddPostFormSubmit);
 
 const onButtonAddClick = () => {
-  onAddPostFormReset();
-  openPopup(popupAddPost);
+  popupAddPost.open();
+  addCardFormValidator.checkInputOpenPopup();
+};
+
+const userProfile = new UserInfo('.user__name', '.user__about');
+
+const setUserProfileValues = () => {
+  const data = userProfile.getUserInfo();
+  popupProfile.setInputValues(data);
+};
+
+const onProfileFormSubmit = (data) => {
+  userProfile.setUserInfo(data);
+  popupProfile.close();
+};
+
+const popupProfile = new PopupWithForm('#profile', onProfileFormSubmit);
+
+const onEditProfileClick = () => {
+  popupProfile.open();
+  setUserProfileValues();
+  profileFormValidator.checkInputOpenPopup();
 };
 
 openEditProfileBtn.addEventListener('click', onEditProfileClick);
 addPostButton.addEventListener('click', onButtonAddClick);
 
-const cardList = new Section({
-  items: initialCards.reverse(),
-  renderer: (data) => {
-    const card = new Card(data, '#post', openFullscreenPopup);
-    cardList.addItem(card.generateCard());
-  }
-}, '.gallery__list');
-
 cardList.renderItems();
-
-popupProfileForm.addEventListener('submit', onProfileFormSubmit);
-popupAddPostForm.addEventListener('submit', onAddPostFormSubmit);
 
 const profileFormValidator = new FormValidator(formSelectors, popupProfileForm);
 profileFormValidator.enableValidation();
