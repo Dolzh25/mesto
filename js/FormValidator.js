@@ -29,7 +29,7 @@ export default class FormValidator {
   checkInputOpenPopup() {
     this._inputList.forEach((inputElement) => {
       this._checkInputValidity(inputElement);
-      this.toggleButtonState();
+      this._toggleButtonState();
     });
   };
 
@@ -45,7 +45,7 @@ export default class FormValidator {
     }
   };
 
-  toggleButtonState() {
+  _toggleButtonState() {
     if (this._hasInvalidInput()) {
       this._buttonElement.classList.add(this._data.inactiveButtonClass);
     } else {
@@ -54,12 +54,12 @@ export default class FormValidator {
   };
 
   _setEventListeners() {
-    this.toggleButtonState();
+    this._toggleButtonState();
     this._inputList.forEach((inputElement) => {
       this._checkInputValidity(inputElement);
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);
-        this.toggleButtonState();
+        this._toggleButtonState();
       });
     });
   };
