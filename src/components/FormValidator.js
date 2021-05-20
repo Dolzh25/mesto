@@ -34,14 +34,10 @@ export default class FormValidator {
   };
 
   _checkInputValidity(inputElement) {
-    if (inputElement.value === '') {
-      this._hideInputError(inputElement);
+    if (!inputElement.validity.valid) {
+      this._showInputError(inputElement, inputElement.validationMessage);
     } else {
-      if (!inputElement.validity.valid) {
-        this._showInputError(inputElement, inputElement.validationMessage);
-      } else {
-        this._hideInputError(inputElement);
-      }
+      this._hideInputError(inputElement);
     }
   };
 

@@ -1,35 +1,35 @@
 import '../pages/style.css';
-import initialCards from './initial-cards.js';
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
-import Section from './Section.js';
-import PopupWithImage from './PopupWithImage.js';
-import PopupWithForm from './PopupWithForm.js';
-import UserInfo from './UserInfo.js';
+import {
+  formSelectors,
+  openEditProfileBtn,
+  addPostButton,
+  popupProfileForm,
+  popupAddPostForm,
+  gallerySelector
+} from '../utils/constants.js';
+import initialCards from '../utils/initial-cards.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
 
-const openEditProfileBtn = document.querySelector('.user__button-edit');
-const addPostButton = document.querySelector('.user__button-add');
-const popupProfileForm = document.querySelector('#profile form');
-const popupAddPostForm = document.querySelector('#add-post form');
-
-const formSelectors = {
-  formSelector: '.form',
-  inputSelector: '.form__input',
-  submitButtonSelector: '.form__button-submit',
-  inactiveButtonClass: 'form__button-submit_disabled',
-  inputErrorClass: 'form__input_error',
-  errorClass: 'form__input-error_active'
+const createCard = (data, selectorTemplate, handler) => {
+  const card = new Card(data, selectorTemplate, () => {
+    handler.open(data);
+  });
+  return card.generateCard();
 }
 
 const cardList = new Section({
   items: initialCards.reverse(),
   renderer: (data) => {
 
-    const card = new Card(data, '#post', popupWithImage.open);
-
-    cardList.addItem(card.generateCard());
+    const card = createCard(data, '#post', popupWithImage);
+    cardList.addItem(card);
   }
-}, '.gallery__list');
+}, gallerySelector);
 
 const popupWithImage = new PopupWithImage('#fullscreen-post');
 
@@ -39,8 +39,8 @@ const onAddPostFormSubmit = (values) => {
     link: values['post-image']
   }
 
-  const card = new Card(data, '#post', popupWithImage.open);
-  cardList.addItem(card.generateCard());
+  const card = createCard(data, '#post', popupWithImage);
+  cardList.addItem(card);
 
   popupAddPost.close();
 };
