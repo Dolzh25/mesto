@@ -5,7 +5,9 @@ import {
   addPostButton,
   popupProfileForm,
   popupAddPostForm,
-  gallerySelector
+  gallerySelector,
+  userNameSelector,
+  userAboutSelector
 } from '../utils/constants.js';
 import initialCards from '../utils/initial-cards.js';
 import Card from '../components/Card.js';
@@ -18,6 +20,7 @@ import UserInfo from '../components/UserInfo.js';
 const createCard = (data, selectorTemplate, handler) => {
   const card = new Card(data, selectorTemplate, () => {
     handler.open(data);
+    handler.setEventListeners();
   });
   return card.generateCard();
 }
@@ -25,7 +28,6 @@ const createCard = (data, selectorTemplate, handler) => {
 const cardList = new Section({
   items: initialCards.reverse(),
   renderer: (data) => {
-
     const card = createCard(data, '#post', popupWithImage);
     cardList.addItem(card);
   }
@@ -49,10 +51,11 @@ const popupAddPost = new PopupWithForm('#add-post', onAddPostFormSubmit);
 
 const onButtonAddClick = () => {
   popupAddPost.open();
+  popupAddPost.setEventListeners();
   addCardFormValidator.checkInputOpenPopup();
 };
 
-const userProfile = new UserInfo('.user__name', '.user__about');
+const userProfile = new UserInfo(userNameSelector, userAboutSelector);
 
 const setUserProfileValues = () => {
   const data = userProfile.getUserInfo();
@@ -68,6 +71,7 @@ const popupProfile = new PopupWithForm('#profile', onProfileFormSubmit);
 
 const onEditProfileClick = () => {
   popupProfile.open();
+  popupProfile.setEventListeners();
   setUserProfileValues();
   profileFormValidator.checkInputOpenPopup();
 };

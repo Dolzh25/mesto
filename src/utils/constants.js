@@ -4,7 +4,9 @@ export {
   addPostButton,
   popupProfileForm,
   popupAddPostForm,
-  gallerySelector
+  gallerySelector,
+  userNameSelector,
+  userAboutSelector
 }
 
 const formSelectors = {
@@ -21,3 +23,5 @@ const addPostButton = document.querySelector('.user__button-add');
 const popupProfileForm = document.querySelector('#profile form');
 const popupAddPostForm = document.querySelector('#add-post form');
 const gallerySelector = '.gallery__list';
+const userNameSelector = '.user__name';
+const userAboutSelector = '.user__about';
