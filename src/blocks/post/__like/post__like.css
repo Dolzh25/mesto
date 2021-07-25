@@ -1,20 +1,5 @@
 .post__like {
-  flex-shrink: 0;
-  width: 22px;
-  height: 19px;
+  display: flex;
+  flex-direction: column;
   margin-left: 30px;
-  padding: 0;
-  border: none;
-  background-color: transparent;
-  background-image: url("../../../images/heart-icon.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 22px 19px;
-  cursor: pointer;
-}
-
-
-.post__like:hover,
-.post__like:focus {
-  opacity: 0.5;
 }

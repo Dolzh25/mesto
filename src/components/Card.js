@@ -16,7 +16,7 @@ export default class Card {
   }
 
   _putLikeCard() {
-    this._likeButton.classList.toggle('post__like_active');
+    this._likeButton.classList.toggle('post__like-btn_active');
   }
 
   _removeCard() {
@@ -39,13 +39,15 @@ export default class Card {
     this._element = this._getTemplate();
     this._imageElement = this._element.querySelector('.post__image');
     this._titleElement = this._element.querySelector('.post__title');
-    this._likeButton = this._element.querySelector('.post__like');
+    this._likeButton = this._element.querySelector('.post__like-btn');
+    this._likeCount = this._element.querySelector('.post__like-count');
     this._deleteButton = this._element.querySelector('.post__delete');
     this._setEventListeners();
 
     this._imageElement.src = this._data.link;
     this._imageElement.alt = this._data.name;
     this._titleElement.textContent = this._data.name;
+    this._likeCount.textContent = this._data.likes.length;
 
     return this._element;
   }

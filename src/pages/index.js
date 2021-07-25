@@ -9,13 +9,22 @@ import {
   userNameSelector,
   userAboutSelector
 } from '../utils/constants.js';
-import initialCards from '../utils/initial-cards.js';
+
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
+
+const api = new Api({
+  url: `https://mesto.nomoreparties.co/v1/с�cohort-26`,
+  headers: {
+    authorization: 'b30fc4d2-7ea7-4858-9371-9a3fe032902a',
+    'Content-Type': 'application/json',
+  }
+});
 
 const createCard = (data, selectorTemplate, handler) => {
   const card = new Card(data, selectorTemplate, () => {
@@ -26,7 +35,6 @@ const createCard = (data, selectorTemplate, handler) => {
 }
 
 const cardList = new Section({
-  items: initialCards.reverse(),
   renderer: (data) => {
     const card = createCard(data, '#post', popupWithImage);
     cardList.addItem(card);
@@ -41,8 +49,11 @@ const onAddPostFormSubmit = (values) => {
     link: values['post-image']
   }
 
-  const card = createCard(data, '#post', popupWithImage);
-  cardList.addItem(card);
+  api.addNewCard(data)
+    .then((data) => {
+      const card = createCard(data, '#post', popupWithImage);
+      cardList.addItem(card);
+    })
 
   popupAddPost.close();
 };
@@ -62,8 +73,13 @@ const setUserProfileValues = () => {
   popupProfile.setInputValues(data);
 };
 
-const onProfileFormSubmit = (data) => {
-  userProfile.setUserInfo(data);
+const onProfileFormSubmit = () => {
+  const data = popupProfile.getInputValues();
+
+  api.setProfileInfo(data)
+    .then((data) => {
+      userProfile.setUserInfo(data);
+    })
   popupProfile.close();
 };
 
@@ -79,10 +95,20 @@ const onEditProfileClick = () => {
 openEditProfileBtn.addEventListener('click', onEditProfileClick);
 addPostButton.addEventListener('click', onButtonAddClick);
 
-cardList.renderItems();
-
 const profileFormValidator = new FormValidator(formSelectors, popupProfileForm);
 profileFormValidator.enableValidation();
 
 const addCardFormValidator = new FormValidator(formSelectors, popupAddPostForm);
 addCardFormValidator.enableValidation();
+
+api
+  .getInitialCards()
+  .then((data) => {
+    cardList.renderItems(data.reverse());
+  })
+
+api.getProfileInfo()
+  .then((data) => {
+    popupProfile.setInputValues(data);
+    userProfile.setUserInfo(data);
+  })
