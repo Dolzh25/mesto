@@ -1,8 +1,11 @@
 export default class Card {
-  constructor(data, selectorTemplate, handleOpenPopup) {
+  constructor(data, selectorTemplate, handleOpenPopup, handleDeletePopup, handlePushLike, owner) {
     this._data = data;
     this._selectorTemplate = selectorTemplate;
     this._handleOpenPopup = handleOpenPopup;
+    this._handleDeletePopup = handleDeletePopup;
+    this._handlePushLike = handlePushLike;
+    this._owner = owner;
   }
 
   _getTemplate() {
@@ -15,11 +18,27 @@ export default class Card {
     return cardElement;
   }
 
-  _putLikeCard() {
-    this._likeButton.classList.toggle('post__like-btn_active');
+  _updateLikeCount(data) {
+    this._likeCount.textContent = data.likes.length;
   }
 
-  _removeCard() {
+  _putLikeCard() {
+    if (this._likeButton.classList.contains('post__like-btn_active')) {
+      this._handlePushLike(this._data._id, 'DELETE')
+        .then((res) => {
+          this._updateLikeCount(res);
+          this._likeButton.classList.remove('post__like-btn_active');
+        })
+    } else {
+      this._handlePushLike(this._data._id, 'PUT')
+        .then((res) => {
+          this._updateLikeCount(res);
+          this._likeButton.classList.add('post__like-btn_active');
+        })
+    }
+  }
+
+  removeCard() {
     this._element.remove();
   }
 
@@ -28,7 +47,7 @@ export default class Card {
       this._putLikeCard();
     });
     this._deleteButton.addEventListener('click', () => {
-      this._removeCard();
+      this._handleDeletePopup();
     });
     this._imageElement.addEventListener('click', () => {
       this._handleOpenPopup(this._data.link, this._data.name);
@@ -43,6 +62,16 @@ export default class Card {
     this._likeCount = this._element.querySelector('.post__like-count');
     this._deleteButton = this._element.querySelector('.post__delete');
     this._setEventListeners();
+
+    if (this._owner === this._data.owner._id) {
+      this._deleteButton.classList.add('post__delete_show');
+    }
+
+    this._data.likes.forEach(like => {
+      if (like._id === this._owner) {
+        this._likeButton.classList.add('post__like-btn_active');
+      }
+    });
 
     this._imageElement.src = this._data.link;
     this._imageElement.alt = this._data.name;

@@ -1,0 +1,16 @@
+.user__avatar-edit {
+  position: absolute;
+  z-index: 1;
+  display: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  background-image: url("../../../images/pancil-icon.svg");
+  background-repeat: no-repeat;
+  background-size: 26px 26px;
+  background-position: center;
+  cursor: pointer;
+}

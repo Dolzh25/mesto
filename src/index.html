@@ -14,7 +14,10 @@
   </header>
   <main class="container">
     <section class="user">
-      <img class="user__avatar" src="<%=require('./images/kusto.jpg')%>" alt="Жак-Ив Кусто">
+      <div class="user__avatar">
+        <img class="user__avatar-image" src="<%=require('./images/kusto.jpg')%>" alt="Жак-Ив Кусто">
+        <button class="user__avatar-edit" type="button" aria-label="Редактировать изображение профиля"></button>
+      </div>
       <div class="user__content">
         <h1 class="user__name">Жак-Ив Кусто</h1>
         <p class="user__about">Исследователь океана</p>
@@ -51,6 +54,20 @@
     </div>
   </section>
 
+  <section class="popup" id="avatar">
+    <div class="popup__wrapper">
+      <h2 class="popup__title">Обновить аватар</h2>
+      <button class="popup__close" type="button" aria-label="Закрыть попап"></button>
+      <form class="form" action="#" method="POST" name="avatar">
+        <label class="form__field" aria-label="Новый аватар">
+          <input class="form__input" id="avatar-input" type="text" name="avatar" placeholder="Ссылка" required>
+          <span class="form__input-error name-input-error"></span>
+        </label>
+        <button class="form__button-submit" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </section>
+
   <section class="popup" id="add-post">
     <div class="popup__wrapper">
       <h2 class="popup__title">Новое место</h2>
@@ -65,6 +82,16 @@
           <span class="form__input-error post-image-error"></span>
         </label>
         <button class="form__button-submit" type="submit">Создать</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="popup" id="delete-post">
+    <div class="popup__wrapper">
+      <h2 class="popup__title">Вы уверены?</h2>
+      <button class="popup__close" type="button" aria-label="Закрыть попап"></button>
+      <form class="form" action="#" method="POST" name="delete-post">
+        <button class="form__button-submit" type="submit">Да</button>
       </form>
     </div>
   </section>

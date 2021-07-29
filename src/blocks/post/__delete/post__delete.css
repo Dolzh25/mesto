@@ -1,5 +1,6 @@
 .post__delete {
   position: absolute;
+  display: none;
   top: 18px;
   right: 15px;
   width: 18px;
@@ -11,6 +12,10 @@
   background-repeat: no-repeat;
   cursor: pointer;
   transition: opacity 0.2s ease;
+}
+
+.post__delete_show {
+  display: block;
 }
 
 .post__delete:hover,
