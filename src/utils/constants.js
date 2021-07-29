@@ -9,7 +9,6 @@ export {
   userAboutSelector,
   userAvatarSelector,
   changeAvatarBtn,
-  popupChangeAvatarForm
 }
 
 const formSelectors = {
@@ -26,7 +25,6 @@ const addPostButton = document.querySelector('.user__button-add');
 const popupProfileForm = document.querySelector('#profile form');
 const popupAddPostForm = document.querySelector('#add-post form');
 const changeAvatarBtn = document.querySelector('.user__avatar-edit');
-const popupChangeAvatarForm = document.querySelector('#avatar form');
 const gallerySelector = '.gallery__list';
 const userNameSelector = '.user__name';
 const userAboutSelector = '.user__about';

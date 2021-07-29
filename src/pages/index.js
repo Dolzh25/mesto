@@ -9,8 +9,7 @@ import {
   userNameSelector,
   userAboutSelector,
   userAvatarSelector,
-  changeAvatarBtn,
-  popupChangeAvatarForm
+  changeAvatarBtn
 } from '../utils/constants.js';
 
 import Card from '../components/Card.js';
