@@ -30,9 +30,21 @@ const api = new Api({
   }
 });
 
-const popupDeleteCard = new PopupDeleteCard('#delete-post', () => {
 
-});
+const handleDeleteCard = (data, element) => {
+  api.removeCard(data)
+    .then(() => {
+      popupDeleteCard.close();
+      element.remove();
+    })
+    .finally(() => {
+      popupDeleteCard.setSubmitButtonText();
+    })
+}
+
+const popupDeleteCard = new PopupDeleteCard('#delete-post', handleDeleteCard);
+popupDeleteCard.setEventListeners();
+
 
 const handlePushLike = (id, method) => {
   return api.pushLike(id, method)
@@ -45,21 +57,10 @@ const createCard = (data, selectorTemplate, handler) => {
     data,
     selectorTemplate,
     () => {
-        handler.open(data);
-        handler.setEventListeners();
-      },
-    () => {
-      popupDeleteCard.open();
-      popupDeleteCard.setEventListeners();
-
-      popupDeleteCard._form.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-        api.removeCard(data)
-          .then((res) => {
-            card.removeCard();
-            popupDeleteCard.close();
-          })
-      });
+      handler.open(data);
+    },
+    (data, element) => {
+      popupDeleteCard.open(data, element);
     },
     handlePushLike,
     owner
@@ -75,6 +76,7 @@ const cardList = new Section({
 }, gallerySelector);
 
 const popupWithImage = new PopupWithImage('#fullscreen-post');
+popupWithImage.setEventListeners();
 
 const onAddPostFormSubmit = (values) => {
   const data = {
@@ -82,20 +84,24 @@ const onAddPostFormSubmit = (values) => {
     link: values['post-image']
   }
 
+  popupAddPost.setSubmitButtonText('Сохранение...');
   api.addNewCard(data)
     .then((data) => {
       const card = createCard(data, '#post', popupWithImage);
       cardList.addItem(card);
+    })
+    .finally(() => {
+      popupAddPost.setSubmitButtonText();
     })
 
   popupAddPost.close();
 };
 
 const popupAddPost = new PopupWithForm('#add-post', onAddPostFormSubmit);
+popupAddPost.setEventListeners();
 
 const onButtonAddClick = () => {
   popupAddPost.open();
-  popupAddPost.setEventListeners();
   addCardFormValidator.checkInputOpenPopup();
 };
 
@@ -108,20 +114,22 @@ const setUserProfileValues = () => {
 
 const onProfileFormSubmit = () => {
   const data = popupProfile.getInputValues();
-
+  popupProfile.setSubmitButtonText('Сохранение...');
   api.setProfileInfo(data)
     .then((data) => {
       userProfile.setUserInfo(data);
+    })
+    .finally(() => {
+      popupProfile.setSubmitButtonText();
     })
   popupProfile.close();
 };
 
 const popupProfile = new PopupWithForm('#profile', onProfileFormSubmit);
-
+popupProfile.setEventListeners();
 
 const onEditProfileClick = () => {
   popupProfile.open();
-  popupProfile.setEventListeners();
   setUserProfileValues();
   profileFormValidator.checkInputOpenPopup();
 };
@@ -136,18 +144,22 @@ const addCardFormValidator = new FormValidator(formSelectors, popupAddPostForm);
 addCardFormValidator.enableValidation();
 
 const handleAvatarPopupSubmit = (data) => {
+  changeAvatarPopup.setSubmitButtonText('Сохранение...');
   api.changeAvatar(data)
     .then((res) => {
       userProfile.setUserAvatar(res);
       changeAvatarPopup.close();
     })
+    .finally(() => {
+      changeAvatarPopup.setSubmitButtonText();
+    })
 }
 
 const changeAvatarPopup = new PopupAvatar('#avatar', handleAvatarPopupSubmit);
+changeAvatarPopup.setEventListeners();
 
 changeAvatarBtn.addEventListener('click', () => {
   changeAvatarPopup.open();
-  changeAvatarPopup.setEventListeners();
 });
 
 api

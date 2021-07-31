@@ -47,7 +47,7 @@ export default class Card {
       this._putLikeCard();
     });
     this._deleteButton.addEventListener('click', () => {
-      this._handleDeletePopup();
+      this._handleDeletePopup(this._data, this._element);
     });
     this._imageElement.addEventListener('click', () => {
       this._handleOpenPopup(this._data.link, this._data.name);
