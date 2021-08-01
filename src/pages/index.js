@@ -18,7 +18,6 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupDeleteCard from '../components/PopupDeleteCard';
-import PopupAvatar from '../components/PopupAvatar';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 
@@ -30,12 +29,16 @@ const api = new Api({
   }
 });
 
-
 const handleDeleteCard = (data, element) => {
+  popupDeleteCard.setSubmitButtonText('Удаление...');
   api.removeCard(data)
     .then(() => {
       popupDeleteCard.close();
       element.remove();
+    })
+    .catch((err) => {
+      console.log(err);
+      return Promise.reject(err);
     })
     .finally(() => {
       popupDeleteCard.setSubmitButtonText();
@@ -48,6 +51,10 @@ popupDeleteCard.setEventListeners();
 
 const handlePushLike = (id, method) => {
   return api.pushLike(id, method)
+    .catch((err) => {
+      console.log(err);
+      return Promise.reject(err);
+    })
 }
 
 let owner = null;
@@ -64,7 +71,8 @@ const createCard = (data, selectorTemplate, handler) => {
     },
     handlePushLike,
     owner
-    );
+  );
+
   return card.generateCard();
 }
 
@@ -89,12 +97,15 @@ const onAddPostFormSubmit = (values) => {
     .then((data) => {
       const card = createCard(data, '#post', popupWithImage);
       cardList.addItem(card);
+      popupAddPost.close();
+    })
+    .catch((err) => {
+      console.log(err);
+      return Promise.reject(err);
     })
     .finally(() => {
       popupAddPost.setSubmitButtonText();
     })
-
-  popupAddPost.close();
 };
 
 const popupAddPost = new PopupWithForm('#add-post', onAddPostFormSubmit);
@@ -118,11 +129,15 @@ const onProfileFormSubmit = () => {
   api.setProfileInfo(data)
     .then((data) => {
       userProfile.setUserInfo(data);
+      popupProfile.close();
+    })
+    .catch((err) => {
+      console.log(err);
+      return Promise.reject(err);
     })
     .finally(() => {
       popupProfile.setSubmitButtonText();
     })
-  popupProfile.close();
 };
 
 const popupProfile = new PopupWithForm('#profile', onProfileFormSubmit);
@@ -150,27 +165,30 @@ const handleAvatarPopupSubmit = (data) => {
       userProfile.setUserAvatar(res);
       changeAvatarPopup.close();
     })
+    .catch((err) => {
+      console.log(err);
+      return Promise.reject(err);
+    })
     .finally(() => {
       changeAvatarPopup.setSubmitButtonText();
     })
 }
 
-const changeAvatarPopup = new PopupAvatar('#avatar', handleAvatarPopupSubmit);
+const changeAvatarPopup = new PopupWithForm('#avatar', handleAvatarPopupSubmit);
 changeAvatarPopup.setEventListeners();
 
 changeAvatarBtn.addEventListener('click', () => {
   changeAvatarPopup.open();
 });
 
-api
-  .getInitialCards()
-  .then((data) => {
-    cardList.renderItems(data.reverse());
+Promise.all([api.getProfileInfo(), api.getInitialCards()])
+  .then((res) => {
+    owner = res[0]._id;
+    popupProfile.setInputValues(res[0]);
+    userProfile.setUserInfo(res[0]);
+    cardList.renderItems(res[1].reverse());
   })
-
-api.getProfileInfo()
-  .then((data) => {
-    popupProfile.setInputValues(data);
-    userProfile.setUserInfo(data);
-    owner = data._id;
+  .catch((err) => {
+    console.log(err);
+    return Promise.reject(err);
   })

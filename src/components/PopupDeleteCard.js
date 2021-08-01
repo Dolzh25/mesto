@@ -22,7 +22,6 @@ export default class PopupDeleteCard extends Popup {
     super.open();
     this._data = data;
     this._element = element;
-    this._form.addEventListener('submit', this._submitForm);
   }
 
   _submitForm(evt) {
@@ -32,5 +31,6 @@ export default class PopupDeleteCard extends Popup {
 
   setEventListeners() {
     super.setEventListeners();
+    this._form.addEventListener('submit', this._submitForm);
   }
 }

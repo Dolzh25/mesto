@@ -28,9 +28,9 @@ export default class FormValidator {
 
   checkInputOpenPopup() {
     this._inputList.forEach((inputElement) => {
-      this._checkInputValidity(inputElement);
-      this._toggleButtonState();
+      this._hideInputError(inputElement)
     });
+    this._toggleButtonState();
   };
 
   _checkInputValidity(inputElement) {

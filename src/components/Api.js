@@ -7,13 +7,11 @@ export default class Api {
   getInitialCards() {
     return fetch(`${this.url}/cards`, {headers: this.headers})
       .then(this._checkResault)
-      .catch(this._showError)
   }
 
   getProfileInfo() {
     return fetch(`${this.url}/users/me`, {headers: this.headers})
       .then(this._checkResault)
-      .catch(this._showError)
   }
 
   setProfileInfo(data) {
@@ -23,7 +21,6 @@ export default class Api {
       body: JSON.stringify(data)
     })
       .then(this._checkResault)
-      .catch(this._showError)
   }
 
   addNewCard(data) {
@@ -33,7 +30,6 @@ export default class Api {
       body: JSON.stringify(data)
     })
       .then(this._checkResault)
-      .catch(this._showError)
   }
 
   removeCard(data) {
@@ -42,7 +38,6 @@ export default class Api {
       headers: this.headers,
     })
       .then(this._checkResault)
-      .catch(this._showError)
   }
 
   pushLike(id, method) {
@@ -51,7 +46,6 @@ export default class Api {
       headers: this.headers,
     })
       .then(this._checkResault)
-      .catch(this._showError)
   }
 
   changeAvatar(data) {
@@ -59,11 +53,10 @@ export default class Api {
       method: 'PATCH',
       headers: this.headers,
       body: JSON.stringify({
-        avatar: data
+        avatar: data.avatar
       })
     })
       .then(this._checkResault)
-      .catch(this._showError)
   }
 
   _checkResault(res) {
@@ -73,9 +66,4 @@ export default class Api {
 
     return Promise.reject(`Ошибка: ${res.status}`);
   }
-
-  _showError = (err) => {
-    console.log(err);
-    return Promise.reject(err);
-  };
 }
