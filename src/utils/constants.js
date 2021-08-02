@@ -4,6 +4,7 @@ export {
   addPostButton,
   popupProfileForm,
   popupAddPostForm,
+  popupChangeAvatarForm,
   gallerySelector,
   userNameSelector,
   userAboutSelector,
@@ -24,6 +25,7 @@ const openEditProfileBtn = document.querySelector('.user__button-edit');
 const addPostButton = document.querySelector('.user__button-add');
 const popupProfileForm = document.querySelector('#profile form');
 const popupAddPostForm = document.querySelector('#add-post form');
+const popupChangeAvatarForm = document.querySelector('#avatar form');
 const changeAvatarBtn = document.querySelector('.user__avatar-edit');
 const gallerySelector = '.gallery__list';
 const userNameSelector = '.user__name';

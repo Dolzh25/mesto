@@ -29,11 +29,17 @@ export default class Card {
           this._updateLikeCount(res);
           this._likeButton.classList.remove('post__like-btn_active');
         })
+        .catch((err) => {
+          console.log(err);
+        })
     } else {
       this._handlePushLike(this._data._id, 'PUT')
         .then((res) => {
           this._updateLikeCount(res);
           this._likeButton.classList.add('post__like-btn_active');
+        })
+        .catch((err) => {
+          console.log(err);
         })
     }
   }
@@ -68,7 +74,6 @@ export default class Card {
     }
 
     this._data.likes.forEach(like => {
-      // console.log(like, this._owner);
       if (like._id === this._owner) {
         this._likeButton.classList.add('post__like-btn_active');
       }
@@ -81,9 +86,4 @@ export default class Card {
 
     return this._element;
   }
-
-  _showError = (err) => {
-    console.log(err);
-    return Promise.reject(err);
-  };
 }

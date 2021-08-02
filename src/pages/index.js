@@ -5,6 +5,7 @@ import {
   addPostButton,
   popupProfileForm,
   popupAddPostForm,
+  popupChangeAvatarForm,
   gallerySelector,
   userNameSelector,
   userAboutSelector,
@@ -38,7 +39,6 @@ const handleDeleteCard = (data, element) => {
     })
     .catch((err) => {
       console.log(err);
-      return Promise.reject(err);
     })
     .finally(() => {
       popupDeleteCard.setSubmitButtonText();
@@ -51,10 +51,6 @@ popupDeleteCard.setEventListeners();
 
 const handlePushLike = (id, method) => {
   return api.pushLike(id, method)
-    .catch((err) => {
-      console.log(err);
-      return Promise.reject(err);
-    })
 }
 
 let owner = null;
@@ -101,7 +97,6 @@ const onAddPostFormSubmit = (values) => {
     })
     .catch((err) => {
       console.log(err);
-      return Promise.reject(err);
     })
     .finally(() => {
       popupAddPost.setSubmitButtonText();
@@ -133,7 +128,6 @@ const onProfileFormSubmit = () => {
     })
     .catch((err) => {
       console.log(err);
-      return Promise.reject(err);
     })
     .finally(() => {
       popupProfile.setSubmitButtonText();
@@ -158,6 +152,9 @@ profileFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(formSelectors, popupAddPostForm);
 addCardFormValidator.enableValidation();
 
+const changeAvatarFormValidator = new FormValidator(formSelectors, popupChangeAvatarForm);
+changeAvatarFormValidator.enableValidation();
+
 const handleAvatarPopupSubmit = (data) => {
   changeAvatarPopup.setSubmitButtonText('Сохранение...');
   api.changeAvatar(data)
@@ -167,7 +164,6 @@ const handleAvatarPopupSubmit = (data) => {
     })
     .catch((err) => {
       console.log(err);
-      return Promise.reject(err);
     })
     .finally(() => {
       changeAvatarPopup.setSubmitButtonText();
@@ -179,16 +175,16 @@ changeAvatarPopup.setEventListeners();
 
 changeAvatarBtn.addEventListener('click', () => {
   changeAvatarPopup.open();
+  changeAvatarFormValidator.checkInputOpenPopup();
 });
 
 Promise.all([api.getProfileInfo(), api.getInitialCards()])
-  .then((res) => {
-    owner = res[0]._id;
-    popupProfile.setInputValues(res[0]);
-    userProfile.setUserInfo(res[0]);
-    cardList.renderItems(res[1].reverse());
+  .then(([userData, cards]) => {
+    owner = userData._id;
+    popupProfile.setInputValues(userData);
+    userProfile.setUserInfo(userData);
+    cardList.renderItems(cards.reverse());
   })
   .catch((err) => {
     console.log(err);
-    return Promise.reject(err);
   })

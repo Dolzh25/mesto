@@ -29,7 +29,7 @@ export default class PopupWithForm extends Popup {
 
   setInputValues(data) {
     this._inputList.forEach(input => {
-      this._form.querySelector(`input[name=${input.name}]`).value = data[input.name];
+      input.value = data[input.name];
     });
   }
 

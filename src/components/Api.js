@@ -46,6 +46,9 @@ export default class Api {
       headers: this.headers,
     })
       .then(this._checkResault)
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   changeAvatar(data) {
